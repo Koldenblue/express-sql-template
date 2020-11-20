@@ -9,7 +9,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "watch": "nodemon server.js"
+    "watch": "nodemon server.js",
+    "sass": "cd public/stylesheets/ && sass.bat input.scss style.css && cd ../.."
   },
   "author": "Kevin Miller",
   "license": "MIT",
@@ -18,6 +19,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "mysql2": "^2.2.5",
+    "owasp-password-strength-test": "^1.3.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "sequelize": "^6.3.5"

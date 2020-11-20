@@ -9,10 +9,16 @@ module.exports = function(app) {
   app.get("/", function(req, res) {
     // If the user already has an account send them to the members page
     if (req.user) {
+      console.log('redirected')
       res.redirect("/members");
     }
+    // this will always send index.html instead for the home path, if available
     res.sendFile(path.join(__dirname, "../public/signup.html"));
   });
+
+  app.get('/signup', function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/signup.html"));
+  })
 
   app.get("/login", function(req, res) {
     // If the user already has an account send them to the members page
@@ -29,11 +35,11 @@ module.exports = function(app) {
   });
 
   // all routes that are not specified will simply return the home page (if logged in)
-  app.get("*", (req, res) => {
-    // If the user already has an account send them to the members page
-    if (req.user) {
-      res.redirect("/members");
-    }
-    res.sendFile(path.join(__dirname, "../public/signup.html"));
-  });
+  // app.get("*", (req, res) => {
+  //   // If the user already has an account send them to the members page
+  //   if (req.user) {
+  //     res.redirect("/members");
+  //   }
+  //   res.sendFile(path.join(__dirname, "../public/signup.html"));
+  // });
 };

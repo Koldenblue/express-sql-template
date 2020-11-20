@@ -29,17 +29,43 @@ function signUpUser(email, password) {
     email: email,
     password: password
   })
-    .then(function(data) {
+  .then((result) => {
+
+    // if password strength is insufficient, print errors on page
+    if (!result.strong) {
+      $("#alert .msg").text("");
+      for (let pwRequirement of result["errors"]) {
+        $("#alert .msg").append("<p>" + pwRequirement + "</p>");
+      }
+      $("#alert").fadeIn(500);
+    }
+    // if password strength is sufficient, result.strong will return true
+    else {
+      emailInput.val("");
+      passwordInput.val("");
+      // Store email in local storage upon login.
+      localStorage.setItem("express-bartender-userEmail", result.email)
+      localStorage.setItem("express-bartender-userId", result.id)
       window.location.replace("/members");
-      // If there's an error, handle it by throwing up a bootstrap alert
-    })
-    .catch(handleLoginErr);
+    }
+    // If there's an error, handle it by throwing up a bootstrap alert
+  })
+  .catch(handleLoginErr);
 }
 
 function handleLoginErr(err) {
-  $("#alert .msg").text(err.responseJSON);
+  if (err.responseJSON.errors[0].message === "Validation isEmail on email failed") {
+    var errorMessage = "A valid email address must be entered!"
+    $("#alert .msg").text(errorMessage);
+  }
+  else if (err.responseJSON.errors[0].message === "users.email must be unique") {
+    $("#alert .msg").text("That email is already in use!");
+  }
+  else {
+    $("#alert .msg").text(err.responseJSON.errors[0].message);
+  }
+
   $("#alert").fadeIn(500);
 }
-
 
 });

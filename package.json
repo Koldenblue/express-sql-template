@@ -10,7 +10,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "watch": "nodemon server.js",
-    "sass": "cd public/stylesheets/ && sass.bat input.scss style.css && cd ../.."
+    "sass": "cd public/stylesheets/ && sass.bat input.scss style.css && cd ../..",
+    "watch-sass": "sass.bat --watch public/styles/input.scss public/styles/style.css"
   },
   "author": "Kevin Miller",
   "license": "MIT",
